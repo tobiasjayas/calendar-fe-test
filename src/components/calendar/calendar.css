@@ -1,23 +1,13 @@
-/*
- |  tail.DateTime - A pure, vanilla JavaScript DateTime Picker
- |  @author        SamBrishes <https://github.com/pytesNET/tail.DateTime/>
- |                 MrGuiseppe <https://github.com/MrGuiseppe/pureJSCalendar/>
- |  @version       0.3.4 - Alpha
- |
- |  @license       X11 / MIT License
- |  @copyright     Copyright Â© 2018 - SamBrishes, pytesNET <pytes@gmx.net>
- |                 Copyright Â© 2018 - MrGuiseppe <https://github.com/MrGuiseppe>
- */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* @start tail.DateTime */
 .tail-datetime-calendar {
-  width: 245px;
+  width: 100%;
   height: auto;
-  margin: 15px;
   padding: 0;
   display: block;
   overflow: hidden;
-  position: absolute;
   border-collapse: separate;
   font-family: "Open Sans", Calibri, Arial, sans-serif;
   background-color: #ffffff;
@@ -144,17 +134,18 @@
   -webkit-border-radius: 50%;
 }
 .tail-datetime-calendar .calendar-date table tbody tr > *.today {
-  color: #3296c8;
+  color: white;
+  background-color: #3296c8;
 }
-.tail-datetime-calendar .calendar-date table tbody tr > *.today:after {
+/* .tail-datetime-calendar .calendar-date table tbody tr > *.today:after {
   border-color: #3296c8;
-}
-.tail-datetime-calendar .calendar-date table tbody tr > *:hover {
+} */
+/* .tail-datetime-calendar .calendar-date table tbody tr > *:hover {
   color: #cd283c;
 }
 .tail-datetime-calendar .calendar-date table tbody tr > *:hover:after {
   border-color: #cd283c;
-}
+} */
 .tail-datetime-calendar .calendar-date table tbody tr > *.empty,
 .tail-datetime-calendar .calendar-date table tbody tr > *.disable {
   color: #8899aa;
@@ -274,4 +265,11 @@
   font-size: 12px;
   line-height: 12px;
 }
-/* @end tail.DateTime */
+
+.on-hover {
+  @apply hover:bg-slate-400;
+}
+
+.on-hover:hover {
+  background-color: #8899aa !important;
+}

@@ -2,6 +2,8 @@ import React from 'react'
 import moment from 'moment'
 import { range } from 'moment-range'
 import './calendar.css'
+import Form from './form'
+
 export default class Calendar extends React.Component {
   weekdayshort = moment.weekdaysShort()
 
@@ -12,6 +14,7 @@ export default class Calendar extends React.Component {
     dateObject: moment(),
     allmonths: moment.months(),
     selectedDay: null,
+    showModal: false,
   }
   daysInMonth = () => {
     return this.state.dateObject.daysInMonth()
@@ -198,6 +201,17 @@ export default class Calendar extends React.Component {
       },
     )
   }
+
+  handleOpenModal = () => {
+    this.setState({
+      showModal: true
+    })
+  }
+  handleCloseModal = () => {
+    this.setState({
+      showModal: false
+    })
+  }
   render() {
     let weekdayshortname = this.weekdayshort.map((day) => {
       return <th key={day}>{day}</th>
@@ -210,14 +224,17 @@ export default class Calendar extends React.Component {
     for (let d = 1; d <= this.daysInMonth(); d++) {
       let currentDay = d == this.currentDay() ? 'today' : ''
       daysInMonth.push(
-        <td key={d} className={`calendar-day ${currentDay}`}>
-          <span
-            onClick={(e) => {
-              this.onDayClick(e, d)
-            }}
-          >
-            {d}
-          </span>
+        <td key={d} className={`on-hover calendar-day ${currentDay}`}>
+          <div>
+            <span
+              onClick={(e) => {
+                this.onDayClick(e, d)
+              }}
+              className=""
+            >
+              {d}
+            </span>
+          </div>
         </td>,
       )
     }
@@ -244,55 +261,55 @@ export default class Calendar extends React.Component {
     })
 
     return (
-      <div className="tail-datetime-calendar">
-        <div className="calendar-navi">
-          <span
-            onClick={(e) => {
-              this.onPrev()
-            }}
-            className="calendar-button button-prev"
-          />
-          {!this.state.showMonthTable && (
-            <span
+      <div className="container mx-auto">
+        <div className="tail-datetime-calendar">
+          <div className="bg-red-700 p-3 text-white">
+            {/* <span
               onClick={(e) => {
-                this.showMonth()
+                this.onPrev()
               }}
+              className="calendar-button button-prev"
+            /> */}
+            {!this.state.showMonthTable && (
+              <span className="calendar-label">
+                {this.month()} {this.year()}
+              </span>
+            )}
+            {/* <span
               className="calendar-label"
+              onClick={(e) => this.showYearTable()}
             >
-              {this.month()}
-            </span>
-          )}
-          <span
-            className="calendar-label"
-            onClick={(e) => this.showYearTable()}
-          >
-            {this.year()}
-          </span>
-          <span
-            onClick={(e) => {
-              this.onNext()
-            }}
-            className="calendar-button button-next"
-          />
-        </div>
-
-        <div className="calendar-date">
-          {this.state.showYearTable && <this.YearTable props={this.year()} />}
-          {this.state.showMonthTable && (
-            <this.MonthList data={moment.months()} />
-          )}
-        </div>
-
-        {this.state.showDateTable && (
-          <div className="calendar-date">
-            <table className="calendar-day">
-              <thead>
-                <tr>{weekdayshortname}</tr>
-              </thead>
-              <tbody>{daysinmonth}</tbody>
-            </table>
+              
+            </span> */}
+            {/* <span
+              onClick={(e) => {
+                this.onNext()
+              }}
+              className="calendar-button button-next"
+            /> */}
           </div>
-        )}
+
+          <div className="calendar-date">
+            {this.state.showYearTable && <this.YearTable props={this.year()} />}
+            {this.state.showMonthTable && (
+              <this.MonthList data={moment.months()} />
+            )}
+          </div>
+
+          {this.state.showDateTable && (
+            <div className="calendar-date">
+              <table className="calendar-day">
+                <thead>
+                  <tr>{weekdayshortname}</tr>
+                </thead>
+                <tbody>{daysinmonth}</tbody>
+              </table>
+            </div>
+          )}
+        </div>
+
+        <button onClick={this.handleOpenModal}>Open Modal</button>
+        <Form show={this.state.showModal} />
       </div>
     )
   }
